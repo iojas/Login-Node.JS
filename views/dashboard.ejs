@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>DashBoard</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Welcome to Dashboard <p>congo on successful login</h1>
+
+  <% if(user){ %>
+    <h2>Welcome to Dashboard <%=user.name%> <%=user.lname%> <p> congo on successful login</h2>
+    <h3>your email address is <%=user.email%> </h3>
+  <% } else{ %>
+    <h1>You are Not Logged in</h1>
+  <% } %>
 
   </body>
 </html>

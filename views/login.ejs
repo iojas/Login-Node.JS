@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>tittle</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <h1>Entter details to register</h1>
+    <%if (error) { %>
+    <h2 style="color: red"><%=error%></h2>
+
+    <% } %>
     <form method="post">
       <h3>Email:<input type="text" id="email" name="email"/></h3>
       <h3>Password: <input type="password" id="password" name="password"/></h3>

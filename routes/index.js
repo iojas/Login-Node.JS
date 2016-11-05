@@ -8,11 +8,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Login' });
+  res.render('login', { title: 'Login', error:'' });
 });
 
 router.post('/login', function(req, res, next) {
-    //res.render('login', { title: 'Login' });
+
     var connection = mysql.createConnection({
         host: 'malisamaj1.crwqdxb9dkgh.us-west-2.rds.amazonaws.com',
         user: 'malisamaj',
@@ -27,17 +27,19 @@ router.post('/login', function(req, res, next) {
 
         console.log('You are now connected...');
         if(req.body.email=='' || req.body.password==''){
-            res.render('register', { error: "Please Enter Email and Password" });  return;
+            res.render('login', { error: "Please Enter Email and Password" });  return;
         }
         connection.query('select * from user where email=? and password=?',
             [req.body.email,req.body.password],
             function(err, result) {
-                if(err){
-                    console.log(err);
-                    return;
+                if(result.length!=1){
+                    //console.log(result);
+                    res.render("login",{error:"Invalid Combination of Email and password "});
+                }else{
+                    //console.log(result[0].id);
+                    res.render("dashboard",{user:result[0]});
                 }
-                console.log(result);
-                res.redirect("dashboard");
+
             })
 
 
@@ -77,7 +79,7 @@ router.post('/register', function(req, res, next) {
 
                 }
                 console.log("added data successfully");
-                res.redirect("dashboard ");
+                res.redirect("login ");
             })
 
 
